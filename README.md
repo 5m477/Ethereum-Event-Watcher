@@ -21,12 +21,34 @@ pyfiglet library
 
 Installation:
 Install Python 3.6 or higher.
-Install the web3.py, colorama, and pyfiglet libraries using pip:
-pip install web3 colorama pyfiglet
 
-Clone the repository and run the Event Subscriber script:
+this script requires the web3, asyncio, and pyfiglet Python packages. You can install them using pip:
+pip install web3 asyncio pyfiglet
+
+Usage
+Run the script using the following command:
+
 python event_subscriber.py
+Enter the connection URL for your Ethereum node when prompted. For example:
 
+Enter connection URL for Ethereum node (e.g. http://127.0.0.1:8545):
+
+Enter the contract address and ABI when prompted. For example:
+Enter contract address:
+Enter contract ABI:
+
+Enter the starting and ending block numbers for the event filter when prompted. If left blank, the default value is 'latest'. For example:
+Enter starting block number for event filter (default is 'latest'):
+Enter ending block number for event filter (default is 'latest'):
+
+
+Enter the name of the event to filter for when prompted. For example:
+Enter event name to filter for:
+
+Enter the polling interval in seconds when prompted. For example:
+Enter polling interval in seconds:
+
+The script will then start the event loop and begin listening for new events. When a new event is detected, the script will log the event data to the console.
 
 Note:
-Make sure you have an Ethereum node running locally or remotely, and that the contract address and ABI are correct.
+Make sure you have an Ethereum node running locally or remotely or use infura node API, and that the contract address and ABI are correct.
