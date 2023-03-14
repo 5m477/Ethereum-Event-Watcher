@@ -1,6 +1,3 @@
-#5m477
-#twitter.com/5m477
-
 from web3 import Web3
 import asyncio
 import json
@@ -15,7 +12,7 @@ colorama.init()
 print(pyfiglet.figlet_format("Event Subscriber", font="slant"))
 
 # Prompt for connection URL and create web3 instance
-url = input("Enter connection URL for Ethereum node (e.g. http://127.0.0.1:7545): ")
+url = input("Enter connection URL for Ethereum node (e.g. http://127.0.0.1:8545): ")
 web3 = Web3(Web3.HTTPProvider(url))
 
 # Prompt for contract address and ABI
@@ -35,21 +32,31 @@ if from_block == "":
 if to_block == "":
     to_block = "latest"
 
-# Create event filter for DepositLog
-event_filter = target.events.[EVENTNAME].createFilter(fromBlock=from_block, toBlock=to_block)
+# Prompt for event name to filter for
+event_name = input("Enter event name to filter for: ")
+
+# Get event object from contract ABI
+event_abi = [e for e in target.abi if e["type"] == "event" and e["name"] == event_name][0]
+event = target.events[event_name]
+
+# Create event filter for specified event
+event_filter = event.createFilter(fromBlock=from_block, toBlock=to_block)
 
 # Define event handler function
 def event_handler(event):
-    # Parse event data
-    sender = event["args"]["sender"]
-    value = event["args"]["value"]
-    message = event["args"]["message"]
+    # Extract event data
+    event_name = event.event
+    block_number = event.blockNumber
+    tx_hash = event.transactionHash.hex()
 
-    # Print event data with colors
-    print(f"{Fore.GREEN}New deposit event detected!")
-    print(f"Sender: {sender}")
-    print(f"Value: {value} wei")
-    print(f"Message: {message}{Style.RESET_ALL}\n")
+    # Extract argument values
+    args = {k: v for k, v in event.args.items() if not k.startswith('__')}
+    
+    # Log event data
+    print(f"{Fore.GREEN}New {event_name} event detected!")
+    print(f"Block Number: {block_number}")
+    print(f"Transaction Hash: {tx_hash}")
+    print(f"Arguments: {args}{Style.RESET_ALL}\n")
 
 # Define event loop function
 async def event_loop(filter, interval):
@@ -63,5 +70,5 @@ interval = int(input("Enter polling interval in seconds: "))
 
 # Run event loop with user-specified options
 print(f"{Fore.YELLOW}Starting event loop...")
-print(f"Filtering from block {from_block} to {to_block}, polling every {interval} seconds.{Style.RESET_ALL}\n")
+print(f"Filtering for event '{event_name}' from block {from_block} to {to_block}, polling every {interval} seconds.{Style.RESET_ALL}\n")
 asyncio.run(event_loop(event_filter, interval))
