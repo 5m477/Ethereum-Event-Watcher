@@ -9,7 +9,7 @@ import pyfiglet
 colorama.init()
 
 # Print welcome message
-print(pyfiglet.figlet_format("Event Subscriber", font="slant"))
+print(pyfiglet.figlet_format("477 Event Subscriber", font="slant"))
 
 # Prompt for connection URL and create web3 instance
 url = input("Enter connection URL for Ethereum node (e.g. http://127.0.0.1:8545): ")
