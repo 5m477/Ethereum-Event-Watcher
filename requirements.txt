@@ -1,3 +1,4 @@
 web3.py 
 colorama 
 pyfiglet 
+asyncio
