@@ -36,7 +36,7 @@ if to_block == "":
     to_block = "latest"
 
 # Create event filter for DepositLog
-event_filter = target.events.DepositLog.createFilter(fromBlock=from_block, toBlock=to_block)
+event_filter = target.events.[EVENTNAME].createFilter(fromBlock=from_block, toBlock=to_block)
 
 # Define event handler function
 def event_handler(event):
