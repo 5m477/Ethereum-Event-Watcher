@@ -28,7 +28,7 @@ pip install web3 asyncio pyfiglet
 Usage
 Run the script using the following command:
 
-python event_subscriber.py
+python eth_event_watcher.py
 Enter the connection URL for your Ethereum node when prompted. For example:
 
 Enter connection URL for Ethereum node (e.g. http://127.0.0.1:8545):
